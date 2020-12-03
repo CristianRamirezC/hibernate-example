@@ -11,14 +11,15 @@ import hibernate.modelo.Empleado;
 
 public class TestEmpelados {
 	
-	private static EntityManager manager;
-	
-	private static EntityManagerFactory emf;
 
+	
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("Persistencia");
+	
 	public static void main(String[] args) {
 		
+		EntityManager manager = emf.createEntityManager();
 		//Crear el gestor de persistencia (EM)
-		emf = Persistence.createEntityManagerFactory("Persistencia");
+		//emf = Persistence.createEntityManagerFactory("Persistencia");
 		manager = emf.createEntityManager();
 		
 		/* Query para obtener los empleados de la base de datos
@@ -27,22 +28,37 @@ public class TestEmpelados {
 		*/
 		
 		//Se crea un nuevo empleado
-		Empleado e = new Empleado(10L, "Ramirez", "Cristian", new GregorianCalendar(2020, 12, 3).getTime());
+		Empleado e = new Empleado(1L, "Ramirez", "Cristian", new GregorianCalendar(1997, 15, 06).getTime());
+		//Empleado e2 = new Empleado(2L, "Martinez", "Michel", new GregorianCalendar(1998, 05, 15).getTime());
 		
 		//Se ejecuta una nueva transaccion
 		manager.getTransaction().begin(); //inicio de transaccion
 		manager.persist(e);   //añadimos el empleado e a la tabla (la persistimos). podemos hacer mas de una operacion en cada transaccion
+		//manager.persist(e2);
 		manager.getTransaction().commit(); //se ejecuta las acciones de la transaccion
+		manager.close();  //al cerrar la transaccion, el estado de la entidad (e) pasa de ser managed (que se puede editar)
+		                  //a no managed o dettached
+		
+		imprimirTodo();
+		
+		manager = emf.createEntityManager();
+		manager.getTransaction().begin();
+		e = manager.merge(e);  //Al usar el metodo merge, convierte la entidad e en managed, y asi poder ser editada
+		e.setApellidos("Zapata");
+		manager.getTransaction().commit();
+		manager.close();
 		
 		imprimirTodo();
 	}
 	
 	@SuppressWarnings("unchecked")
 	private static void imprimirTodo() {
+		
+		EntityManager manager = emf.createEntityManager();
 		List<Empleado> emps = (List<Empleado>) manager.createQuery("FROM Empleado").getResultList();
 		System.out.println("Hay " + emps.size() + " Empleado(s) en el sistema");
 		for(Empleado emp : emps) {
-			System.out.println(emp.toString());
+			System.out.println(emp.toString()); 
 		}
 	}
 
