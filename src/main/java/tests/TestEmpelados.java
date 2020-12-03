@@ -41,6 +41,8 @@ public class TestEmpelados {
 		
 		imprimirTodo();
 		
+		// Modificar una entidad, usando el metodo merge para convertir la entidad en managed
+		/*
 		manager = emf.createEntityManager();
 		manager.getTransaction().begin();
 		e = manager.merge(e);  //Al usar el metodo merge, convierte la entidad e en managed, y asi poder ser editada
@@ -48,7 +50,19 @@ public class TestEmpelados {
 		manager.getTransaction().commit();
 		manager.close();
 		 
-		imprimirTodo();
+		imprimirTodo(); */
+		
+		
+		//Eliminar una entidad del sistema usando el metodo remove(entity)
+		/*
+		manager = emf.createEntityManager();
+		manager.getTransaction().begin();
+		e = manager.merge(e);  //se usa el metodo merge para convertir la entidad en managed y asi poder modificarla
+		manager.remove(e); // se remueve la entidad que se le envia al metodo remove(entity)
+		manager.getTransaction().commit();
+		manager.close();
+		imprimirTodo();*/
+		
 	}
 	
 	@SuppressWarnings("unchecked")
