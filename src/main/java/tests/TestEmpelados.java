@@ -47,7 +47,7 @@ public class TestEmpelados {
 		e.setApellidos("Zapata");
 		manager.getTransaction().commit();
 		manager.close();
-		
+		 
 		imprimirTodo();
 	}
 	
