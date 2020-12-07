@@ -1,11 +1,14 @@
 package hibernate.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,13 +29,19 @@ public class Empleado implements Serializable{
 	private String nombre;
 	
 	@Column(name = "FECHA_NACIMIENTO")
-	private Date FechaNacimiento;
+	private LocalDate FechaNacimiento;
+	
+	// Creamos un campo que va ir relacionado con otra tabla
+	@OneToOne(cascade = {CascadeType.ALL}) //se define el tipo de relacion 
+	//se define una cascada ALL para que los cambios hechos en la tabla, afecten los campos relacionados en la otra tabla
+	@JoinColumn(name = "ID_DIRECCION") //se define el campo que va a relacionar las tablas
+	private Direccion direccion; //creamos un objeto de tipo de direccion para hacer la relacion
 	
 	public Empleado() {
 		
 	}
 
-	public Empleado(Long codigo, String apellidos, String nombre, Date fechaNacimiento) {
+	public Empleado(Long codigo, String apellidos, String nombre, LocalDate fechaNacimiento) {
 		this.codigo = codigo;
 		this.apellidos = apellidos;
 		this.nombre = nombre;
@@ -63,17 +72,28 @@ public class Empleado implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return FechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		FechaNacimiento = fechaNacimiento;
+	}
+	
+	public Direccion getDireccion() {
+		return direccion;
+	}
+	
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 	@Override
 	public String toString() {
 		return "Empleado [codigo=" + codigo + ", apellidos=" + apellidos + ", nombre=" + nombre + ", FechaNacimiento="
-				+ FechaNacimiento + "]";
+				+ FechaNacimiento + ", direccion=" + direccion + "]";
 	}
+
+
+	
 }
