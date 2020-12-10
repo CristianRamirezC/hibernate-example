@@ -31,14 +31,14 @@ public class TestEmpelados {
 		
 		//Se crea un nuevo empleado
 		Empleado e = new Empleado(1L, "Ramirez", "Cristian", LocalDate.of(1997, 06, 15));
-		//Empleado e2 = new Empleado(2L, "Martinez", "Michel", new GregorianCalendar(1998, 05, 15).getTime());
+		Empleado e2 = new Empleado(2L, "Martinez", "Michel", LocalDate.of(1998, 05, 15));
 		
 		e.setDireccion(new Direccion(15L, "Cra 4 #62A-10", "Pereira", "Risaralda", "Colombia"));
 		
 		//Se ejecuta una nueva transaccion
 		manager.getTransaction().begin(); //inicio de transaccion
 		manager.persist(e);   //añadimos el empleado "e" a la tabla (la persistimos). podemos hacer mas de una operacion en cada transaccion
-		//manager.persist(e2);
+		manager.persist(e2);
 		manager.getTransaction().commit(); //se ejecuta las acciones de la transaccion
 		manager.close();  //al cerrar la transaccion, el estado de la entidad (e) pasa de ser managed (que se puede editar)
 		                  //a no managed o dettached

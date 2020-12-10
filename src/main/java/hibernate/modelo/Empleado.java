@@ -32,9 +32,11 @@ public class Empleado implements Serializable{
 	private LocalDate FechaNacimiento;
 	
 	// Creamos un campo que va ir relacionado con otra tabla
-	@OneToOne(cascade = {CascadeType.ALL}) //se define el tipo de relacion 
-	//se define una cascada ALL para que los cambios hechos en la tabla, afecten los campos relacionados en la otra tabla
-	@JoinColumn(name = "ID_DIRECCION") //se define el campo que va a relacionar las tablas
+	@OneToOne(cascade = {CascadeType.ALL})      //se define el tipo de relacion 
+	                                       /*se define una cascada ALL para que los cambios hechos en la tabla, afecten los campos 
+	                                        relacionados en la otra tabla*/
+	@JoinColumn(name = "ID_DIRECCION")          //se define el campo que va a relacionar las tablas
+	
 	private Direccion direccion; //creamos un objeto de tipo de direccion para hacer la relacion
 	
 	public Empleado() {

@@ -21,6 +21,10 @@ public class Direccion {
 	
 	@Column(name = "PAIS")
 	private String pais;
+	
+	@OneToOne(mappedBy = "direccion", fetch = FetchType.LAZY)   // creamos la relacion one to one y usamos el mapped by para que la relacion sea bidireccional
+	                                                            //Fetch.LAZY para que no saturemos la base de datos cuando esta sea muy grande
+	private Empleado empleado;          // creamos el objeto empleado para hacer la relacion
 
 	public Direccion() {
 	}
@@ -72,16 +76,20 @@ public class Direccion {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
+	
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+	
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
+	}
 
 	@Override
 	public String toString() {
 		return "Direccion [id=" + id + ", direccion=" + direccion + ", localidad=" + ciudad + ", departamento="
-				+ departamento + ", pais=" + pais + "]";
+				+ departamento + ", pais=" + pais + ", Empleado=" + empleado.getCodigo() + "]";
 	}
-	
-	
-	
-	
 	
 
 }
