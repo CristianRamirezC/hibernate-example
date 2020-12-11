@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 
 import hibernate.modelo.Direccion;
 import hibernate.modelo.Empleado;
+import hibernate.modelo.Venta;
 
 public class TestEmpelados {
 	
@@ -35,10 +36,14 @@ public class TestEmpelados {
 		
 		e.setDireccion(new Direccion(15L, "Cra 4 #62A-10", "Pereira", "Risaralda", "Colombia"));
 		
+		
 		//Se ejecuta una nueva transaccion
 		manager.getTransaction().begin(); //inicio de transaccion
 		manager.persist(e);   //añadimos el empleado "e" a la tabla (la persistimos). podemos hacer mas de una operacion en cada transaccion
 		manager.persist(e2);
+		//persistimos las ventas del empleado "e"
+		manager.persist(new Venta(1L, "Play 4", LocalDate.of(2020, 06, 20), e));
+		manager.persist(new Venta(2L, "Xbox one", LocalDate.of(2020, 07, 03), e));
 		manager.getTransaction().commit(); //se ejecuta las acciones de la transaccion
 		manager.close();  //al cerrar la transaccion, el estado de la entidad (e) pasa de ser managed (que se puede editar)
 		                  //a no managed o dettached
@@ -78,6 +83,13 @@ public class TestEmpelados {
 		for(Empleado emp : emps) {
 			System.out.println(emp.toString()); 
 		}
+		
+		/*   Imprimir las ventas de un empleado
+		Empleado e = manager.find(Empleado.class, 1L);
+		List<Venta> ventas = e.getVentas();
+		for(Venta venta : ventas) {
+			System.out.println("* " + venta.toString());
+		}*/
 	}
 
 }

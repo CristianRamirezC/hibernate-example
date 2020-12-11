@@ -2,12 +2,15 @@ package hibernate.modelo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -36,8 +39,10 @@ public class Empleado implements Serializable{
 	                                       /*se define una cascada ALL para que los cambios hechos en la tabla, afecten los campos 
 	                                        relacionados en la otra tabla*/
 	@JoinColumn(name = "ID_DIRECCION")          //se define el campo que va a relacionar las tablas
-	
 	private Direccion direccion; //creamos un objeto de tipo de direccion para hacer la relacion
+	
+	@OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)  // "empleado" es el objeto de tipo Empleado en la clase "Venta"
+	private List<Venta> ventas = new ArrayList<>();
 	
 	public Empleado() {
 		
@@ -88,6 +93,14 @@ public class Empleado implements Serializable{
 	
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+	
+	public List<Venta> getVentas() {
+		return ventas;
+	}
+	
+	public void setVentas(List<Venta> ventas) {
+		this.ventas = ventas;
 	}
 
 	@Override

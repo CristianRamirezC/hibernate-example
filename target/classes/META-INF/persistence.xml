@@ -10,6 +10,8 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>hibernate.modelo.Empleado</class>
+		<class>hibernate.modelo.Direccion</class>
+		<class>hibernate.modelo.Venta</class>
 
 		<properties>
 			<property name="com.mysql.cj.jdbc.Driver"
